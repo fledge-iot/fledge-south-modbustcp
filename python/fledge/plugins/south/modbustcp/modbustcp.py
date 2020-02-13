@@ -78,7 +78,8 @@ _DEFAULT_CONFIG = {
         'type': 'string',
         'default': 'Modbus TCP',
         'order': "1",
-        'displayName': 'Asset Name'
+        'displayName': 'Asset Name',
+        'mandatory': 'true'
     },
     'address': {
         'description': 'Address of Modbus TCP server',
