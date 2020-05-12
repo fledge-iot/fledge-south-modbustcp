@@ -212,7 +212,7 @@ def plugin_poll(handle):
         if len(coils_address_info) > 0:
             for k, address in coils_address_info.items():
                 coil_bit_values = mbus_client.read_coils(int(address), 1, unit=unit_id)
-                if coil_blit_values is None:
+                if coil_bit_values is None:
                     _LOGGER.error('Failed to read coil %d', address)
                 else:
                     readings.update({k: coil_bit_values.bits[0]})
