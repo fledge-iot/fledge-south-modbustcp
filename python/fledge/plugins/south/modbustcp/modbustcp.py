@@ -211,29 +211,41 @@ def plugin_poll(handle):
         coils_address_info = modbus_map['coils']
         if len(coils_address_info) > 0:
             for k, address in coils_address_info.items():
-                coil_bit_values = mbus_client.read_coils(99 + int(address), 1, unit=unit_id)
-                readings.update({k: coil_bit_values.bits[0]})
+                coil_bit_values = mbus_client.read_coils(int(address), 1, unit=unit_id)
+                if coil_blit_values is None:
+                    _LOGGER.error('Failed to read coil %d', address)
+                else:
+                    readings.update({k: coil_bit_values.bits[0]})
 
         # Discrete input
         discrete_input_info = modbus_map['inputs']
         if len(discrete_input_info) > 0:
             for k, address in discrete_input_info.items():
-                read_discrete_inputs = mbus_client.read_discrete_inputs(99 + int(address), 1, unit=unit_id)
-                readings.update({k:  read_discrete_inputs.bits[0]})
+                read_discrete_inputs = mbus_client.read_discrete_inputs(int(address), 1, unit=unit_id)
+                if read_discrete_inputs is None:
+                    _LOGGER.error('Failed to read input %d', address)
+                else:
+                    readings.update({k:  read_discrete_inputs.bits[0]})
 
         # Holding registers
         holding_registers_info = modbus_map['registers']
         if len(holding_registers_info) > 0:
             for k, address in holding_registers_info.items():
-                register_values = mbus_client.read_holding_registers(99 + int(address), 1, unit=unit_id)
-                readings.update({k: register_values.registers[0]})
+                register_values = mbus_client.read_holding_registers(int(address), 1, unit=unit_id)
+                if register_values is None:
+                    _LOGGER.error('Failed to read holding register %d', address)
+                else:
+                    readings.update({k: register_values.registers[0]})
 
         # Read input registers
         input_registers_info = modbus_map['inputRegisters']
         if len(input_registers_info) > 0:
             for k, address in input_registers_info.items():
-                read_input_reg = mbus_client.read_input_registers(99 + int(address), 1, unit=unit_id)
-                readings.update({k: read_input_reg.registers[0] })
+                read_input_reg = mbus_client.read_input_registers(int(address), 1, unit=unit_id)
+                if read_input_reg is None:
+                    _LOGGER.error('Failed to read input register %d', address)
+                else:
+                    readings.update({k: read_input_reg.registers[0] })
 
         wrapper = {
             'asset': handle['assetName']['value'],
