@@ -133,7 +133,7 @@ def plugin_info():
 
     return {
         'name': 'Modbus TCP',
-        'version': '2.1.0',
+        'version': '2.2.0',
         'mode': 'poll',
         'type': 'south',
         'interface': '1.0',
@@ -203,7 +203,7 @@ def plugin_poll(handle):
             Remark : The value 0 is also accepted to communicate directly to a MODBUS TCP device.
         """
         unit_id = UNIT
-        modbus_map = json.loads(handle['map']['value'])
+        modbus_map = handle['map']['value']
 
         readings = {}
 
