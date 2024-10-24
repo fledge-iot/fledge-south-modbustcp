@@ -29,7 +29,7 @@ def test_plugin_contract():
 def test_plugin_info():
     assert modbustcp.plugin_info() == {
         'name': 'Modbus TCP',
-        'version': '2.5.0',
+        'version': '2.6.0',
         'mode': 'poll',
         'type': 'south',
         'interface': '1.0',
