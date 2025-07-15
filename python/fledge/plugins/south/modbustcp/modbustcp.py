@@ -23,7 +23,7 @@ import copy
 import json
 import logging
 
-from pymodbus3.client.sync import ModbusTcpClient
+from pymodbus.client import ModbusTcpClient
 
 from fledge.common import logger
 from fledge.plugins.common import utils
@@ -31,21 +31,23 @@ from fledge.services.south import exceptions
 
 """ Plugin for reading data from a Modbus TCP data source
 
-    This plugin uses the pymodbus3 library, to install this perform the following steps:
+    This plugin uses the pymodbus library, to install this perform the following steps:
 
-        pip install pymodbus3
+        pip install pymodbus
 
     You can learn more about this library here:
-        https://pypi.org/project/pymodbus3/
+        https://pypi.org/project/pymodbus/
     The library is licensed under the BSD License (BSD).
 
     As an example of how to use this library:
 
-        from pymodbus3.client.sync import ModbusTcpClient
-        
-        client = ModbusTcpClient('127.0.0.1')
-        value = (client.read_holding_registers(0, 1, unit=1)).registers[0]
-        print(value)
+        from pymodbus.client import ModbusTcpClient
+
+        client = ModbusTcpClient('MyDevice.lan')
+        client.connect()
+        client.write_coil(1, True)
+        result = client.read_coils(1,1)
+        print(result.bits[0])
         client.close()
 
 """
@@ -133,7 +135,7 @@ def plugin_info():
 
     return {
         'name': 'Modbus TCP',
-        'version': '3.0.0',
+        'version': '3.1.0',
         'mode': 'poll',
         'type': 'south',
         'interface': '1.0',
